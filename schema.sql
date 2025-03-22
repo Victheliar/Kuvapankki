@@ -8,7 +8,8 @@ CREATE TABLE Items (
     id INTEGER PRIMARY KEY,
     description TEXT,
     user_id INTEGER REFERENCES Users,
-    images BLOB
+    images BLOB,
+    category TEXT
 );
 
 CREATE TABLE Comments (

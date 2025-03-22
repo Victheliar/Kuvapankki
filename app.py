@@ -12,8 +12,8 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    all_items = items.get_items()
-    return render_template("index.html", items = all_items)
+    # all_items = items.get_items()
+    return render_template("index.html")
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
@@ -24,13 +24,23 @@ def show_item(item_id):
 def new_item():
     return render_template("new_item.html")
 
-@app.route("/create_item", methods = ["POST"])
+@app.route("/create_item", methods = ["GET", "POST"])
 def create_item():
-    description = request.form["description"]
-    user_id = session["user_id"]
-
-    items.add_item(description, user_id)
-    return redirect("/")
+    if request.method == "GET":
+        return render_template("new_item.html")
+    
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".png"):
+            return "VIRHE: väärä tiedostomuoto"
+        image = file.read()
+        description = request.form["description"]
+        category = request.form["category"]
+        user_id = session["user_id"]
+        
+        sql = "INSERT INTO Items(description, user_id, images, category) VALUES (?, ?, ?, ?)"
+        db.execute(sql, [description, user_id, image, category])
+        return redirect("/")
 
 @app.route("/register")
 def register():

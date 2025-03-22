@@ -2,15 +2,16 @@
 <html>
 
 <head>
-    <title>{{ item.description }}</title>
+    <title>Lisää kuva</title>
 </head>
 
 <body>
     <h1>Julkaisu käyttäjältä {{ item.username }}</h1>
-    <p>{{ item.description }}</p>
     
+
+
     <p>
-        <a href="/">Takaisin</a>
+        <a href="/item/{{ item.id }}">Takaisin</a>
     </p>
 </body>
 
