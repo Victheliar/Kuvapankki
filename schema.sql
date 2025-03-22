@@ -7,5 +7,14 @@ CREATE TABLE Users (
 CREATE TABLE Items (
     id INTEGER PRIMARY KEY,
     description TEXT,
-    user_id INTEGER REFERENCES Users
+    user_id INTEGER REFERENCES Users,
+    images BLOB
+);
+
+CREATE TABLE Comments (
+    id INTEGER PRIMARY KEY,
+    content TEXT,
+    sent_at TEXT,
+    user_id INTEGER REFERENCES Users,
+    post_id INTEGER REFERENCES Items
 );
