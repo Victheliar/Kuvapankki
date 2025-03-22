@@ -15,21 +15,27 @@
     {% endif %}
 
     <p>
-        <a href="/login">Kirjaudu sisään</a>
-        <a href="/register">Luo tunnus</a>
+        <a href="/register">Luo tunnus</a> |
+        {% if session.user_id %}
         <a href="/logout">Kirjaudu ulos</a>
+        {% else %}
+        <a href="/login">Kirjaudu sisään</a>
+        {% endif %}
     </p>
+
+    <h2>Postaukset</h2>
+    <hr />
+    {% for item in items %}
+    <p>
+        <a href="/item/{{ item.id }}">Postaus:</a> {{ item.description }}
+    </p>
+    <hr />
+    {% endfor %}
 
     <p>
         <a href="/new_item">Uusi postaus</a>
     </p>
 
-    <h2>Postaukset</h2>
-    {% for item in items %}
-    <ul>
-    <li><a href="/item/{{ item.id }}">Postaus:</a>{{ item.description }}</li>
-    </ul>
-    {% endfor %}
 </body>
 
 </html>
