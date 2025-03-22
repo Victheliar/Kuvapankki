@@ -23,17 +23,17 @@
         {% endif %}
     </p>
 
-    <h2>Postaukset</h2>
+    <h2>Julkaisut</h2>
     <hr />
     {% for item in items %}
     <p>
-        <a href="/item/{{ item.id }}">Postaus:</a> {{ item.image }}
+        <a href="/item/{{ item.id }}">Julkaisu:</a> {{ item.image }}
     </p>
     <hr />
     {% endfor %}
 
     <p>
-        <a href="/new_item">Uusi postaus</a>
+        <a href="/new_item">Uusi julkaisu</a>
     </p>
 
 </body>

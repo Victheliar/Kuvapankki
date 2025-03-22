@@ -17,8 +17,8 @@ def index():
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
-    item = items.get_item(item_id)
-    return render_template("show_item.html",item=item)
+    # item = items.get_item(item_id)
+    return render_template("show_item.html")
 
 @app.route("/new_item")
 def new_item():
@@ -37,9 +37,7 @@ def create_item():
         description = request.form["description"]
         category = request.form["category"]
         user_id = session["user_id"]
-        
-        sql = "INSERT INTO Items(description, user_id, images, category) VALUES (?, ?, ?, ?)"
-        db.execute(sql, [description, user_id, image, category])
+        items.add_item(description, user_id, image, category)
         return redirect("/")
 
 @app.route("/register")
