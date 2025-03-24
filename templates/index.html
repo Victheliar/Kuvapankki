@@ -24,20 +24,21 @@
     </p>
 
     <h2>Julkaisut</h2>
-    <hr />
-    {% for item in items %}
-    <a href="/item/{{ item.id }}">Julkaisu:</a>
-    <p>
-
-    </p>
-    <img src = "/item/{{ item.id }}" />
-    <hr />
-    {% endfor %}
 
     <p>
         <a href="/new_item">Uusi julkaisu</a>
     </p>
 
+    <hr />
+    {% for item in items %}
+    <img src = "/image/{{ item.id }}" />
+    <p>
+
+    </p>
+    <p>{{ item.description }}</p>
+    <a href="/item/{{ item.id }}">Katso julkaisu</a>
+    <hr />
+    {% endfor %}
 </body>
 
 </html>

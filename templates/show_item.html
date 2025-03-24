@@ -7,8 +7,13 @@
 
 <body>
     <h1>Julkaisu käyttäjältä {{ item.username }}</h1>
-    <p>{{ item.description }}</p>
     
+    <img src="/image/{{ item.id }}"/>
+
+    <p>
+        Kuvaus: {{ item.description }}
+    </p>
+
     <p>
         <a href="/">Takaisin</a>
     </p>

@@ -12,8 +12,9 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
+    all_images = items.get_images()
     all_items = items.get_items()
-    return render_template("index.html", items = all_items)
+    return render_template("index.html", images = all_images, items = all_items)
 
 @app.route("/new_item")
 def new_item():
@@ -34,13 +35,18 @@ def add_image():
     items.add_item(user_id, image, description)
     return redirect("/")
 
+@app.route("/image/<int:item_id>")
+def show_image(item_id):
+    image = items.get_image(item_id)
+    
+    response = make_response(image)
+    response.headers.set("Content-Type","image/png")
+    return response
+
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
-    
-    response = make_response(item)
-    response.headers.set("Content-Type","image/png")
-    return response
+    return render_template("show_item.html", item = item)
 
 @app.route("/register")
 def register():
