@@ -26,9 +26,11 @@
     <h2>Julkaisut</h2>
     <hr />
     {% for item in items %}
+    <a href="/item/{{ item.id }}">Julkaisu:</a>
     <p>
-        <a href="/item/{{ item.id }}">Julkaisu:</a> {{ item.image }}
+
     </p>
+    <img src = "/item/{{ item.id }}" />
     <hr />
     {% endfor %}
 

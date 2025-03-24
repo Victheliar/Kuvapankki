@@ -9,7 +9,6 @@ CREATE TABLE Items (
     description TEXT,
     user_id INTEGER REFERENCES Users,
     images BLOB,
-    category TEXT
 );
 
 CREATE TABLE Comments (
