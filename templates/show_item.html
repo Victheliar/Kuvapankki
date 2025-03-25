@@ -8,6 +8,12 @@
 <body>
     <h1>Julkaisu käyttäjältä {{ item.username }}</h1>
     
+    {% if session.user_id == item.user_id%}
+    <p>
+        <a href="/edit_item/{{ item.id }}">Muokkaa</a>
+    </p>
+    {% endif %}
+
     <img src="/image/{{ item.id }}"/>
 
     <p>

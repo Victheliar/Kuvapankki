@@ -19,8 +19,14 @@ def get_image(item_id):
 
 def get_item(item_id):
     sql = """SELECT Items.id, Items.description,
-                    Users.username
+                    Users.username, Users.id user_id
              FROM Items, Users
              WHERE Items.user_id = Users.id AND
                    Items.id = ?"""
     return db.query(sql, [item_id])[0]
+
+def update_item(item_id, image, description):
+    sql = """UPDATE Items SET images = ?,
+                            description = ?
+                        WHERE id = ?"""
+    db.execute(sql, [image, description, item_id])

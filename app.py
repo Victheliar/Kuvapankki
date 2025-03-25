@@ -35,6 +35,24 @@ def add_image():
     items.add_item(user_id, image, description)
     return redirect("/")
 
+@app.route("/edit_item/<int:item_id>")
+def edit_item(item_id):
+    item = items.get_item(item_id)
+    return render_template("edit_item.html", item = item)
+
+@app.route("/update_item", methods = ["POST"])
+def update_item():
+    file = request.files["image"]
+    if not file.filename.endswith(".png"):
+        return "VIRHE: väärä tiedostomuoto"
+    image = file.read()
+    if len(image) > 1024*1024:
+        return "VIRHE: liian suuri kuva"
+    item_id = request.form["item_id"]
+    description = request.form["description"]
+    items.update_item(item_id, image, description)
+    return redirect("/item/" + str(item_id))
+
 @app.route("/image/<int:item_id>")
 def show_image(item_id):
     image = items.get_image(item_id)
