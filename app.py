@@ -16,12 +16,6 @@ def index():
     all_items = items.get_items()
     return render_template("index.html", images = all_images, items = all_items)
 
-@app.route("/new_item")
-def new_item():
-    
-    images = [items.get_items()]
-    return render_template("new_item.html")
-
 @app.route("/add_image", methods = ["POST"])
 def add_image():
     file = request.files["image"]

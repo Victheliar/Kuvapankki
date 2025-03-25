@@ -9,10 +9,6 @@
     <h1>Kuvapankki</h1>
 
     {% if session.username %}
-    <p>
-        Tervetuloa {{ session.username }}!
-    </p>
-    {% endif %}
 
     <p>
         <a href="/register">Luo tunnus</a> |
@@ -23,11 +19,24 @@
         {% endif %}
     </p>
 
-    <h2>Julkaisut</h2>
+    <h3>
+        Tervetuloa {{ session.username }}!
+    </h3>
+    <h3>Uusi julkaisu</h3>
 
-    <p>
-        <a href="/new_item">Uusi julkaisu</a>
-    </p>
+    <form action="/add_image" method="post" enctype="multipart/form-data">
+        <p>
+            Kuva: <input type="file" name="image" accept=".png"/>
+        </p>
+        <p>
+            Kuvaus: <br />
+            <textarea name="description" rows="8" cols="60"></textarea>
+        </p>
+        <input type="submit" value="Julkaise kuva" />
+    </form>
+    {% endif %}
+
+    <h3>Julkaisut</h3>
 
     <hr />
     {% for item in items %}
