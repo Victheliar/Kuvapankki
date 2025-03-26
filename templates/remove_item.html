@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Julkaisun poisto</title>
+</head>
+
+<body>
+    <h1>Julkaisun poisto</h1>
+    <p>Haluatko varmasti poistaa tämän julkaisun?</p>
+    <form action="/remove_item/{{ item.id }}" method="post">
+        <input type="submit" name="remove" value="Posta julkaisu" />
+        <input type="submit" name="back" value="Palaa takaisin" />
+    </form>
+    <p>
+
+    </p>
+    <img src="/image/{{ item.id }}" />
+    <p>Kuvaus: {{ item.description }}</p>
+</body>
+
+</html>
