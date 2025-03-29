@@ -16,6 +16,16 @@ def index():
     all_items = items.get_items()
     return render_template("index.html", images = all_images, items = all_items)
 
+@app.route("/find_item")
+def find_item():
+    query = request.args.get("query")
+    if query:
+        results = items.find_items(query)
+    else:
+        query = ""
+        results = []
+    return render_template("find_item.html", query = query, results = results)
+
 @app.route("/add_image", methods = ["POST"])
 def add_image():
     file = request.files["image"]
