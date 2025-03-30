@@ -15,7 +15,7 @@ def get_items():
 def get_image(item_id):
     sql = "SELECT images FROM Items WHERE id = ?"
     result = db.query(sql, [item_id])    
-    return result[0]["images"]
+    return result[0]["images"] if result else None
 
 def get_item(item_id):
     sql = """SELECT Items.id, Items.description,
@@ -23,7 +23,8 @@ def get_item(item_id):
              FROM Items, Users
              WHERE Items.user_id = Users.id AND
                    Items.id = ?"""
-    return db.query(sql, [item_id])[0]
+    result = db.query(sql, [item_id])
+    return result[0] if result else None
 
 def update_item(item_id, image, description):
     sql = """UPDATE Items SET images = ?,

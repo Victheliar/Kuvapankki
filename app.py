@@ -28,40 +28,59 @@ def find_item():
 
 @app.route("/add_image", methods = ["POST"])
 def add_image():
+    require_login()
     file = request.files["image"]
     if not file.filename.endswith(".png"):
         return "VIRHE: väärä tiedostomuoto"
     image = file.read()
-    if len(image) > 1024*1024:
-        return "VIRHE: liian suuri kuva"
     user_id = session["user_id"]
     description = request.form["description"]
+    if len(description) > 5000 or not image:
+        abort(403)
+    if not description:
+        description = ""
+    if len(image) > 1024*1024:
+        return "VIRHE: liian suuri kuva"
     items.add_item(user_id, image, description)
     return redirect("/")
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     item = items.get_item(item_id)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_item.html", item = item)
 
 @app.route("/update_item", methods = ["POST"])
 def update_item():
     file = request.files["image"]
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+    description = request.form["description"]
     if not file.filename.endswith(".png"):
         return "VIRHE: väärä tiedostomuoto"
     image = file.read()
+    if len(description) > 5000 or not image:
+        abort(403)
+    if not description:
+        description = ""
     if len(image) > 1024*1024:
         return "VIRHE: liian suuri kuva"
-    item_id = request.form["item_id"]
-    description = request.form["description"]
     items.update_item(item_id, image, description)
     return redirect("/item/" + str(item_id))
 
 @app.route("/remove_item/<int:item_id>", methods = ["GET","POST"])
 def remove_item(item_id):
+
+    item = items.get_item(item_id)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
     if request.method == "GET":
-        item = items.get_item(item_id)
         return render_template("remove_item.html", item = item)
+
     if request.method == "POST":
         if "remove" in request.form:
             items.remove_item(item_id)
@@ -72,7 +91,8 @@ def remove_item(item_id):
 @app.route("/image/<int:item_id>")
 def show_image(item_id):
     image = items.get_image(item_id)
-    
+    if not image:
+        abort(404)
     response = make_response(image)
     response.headers.set("Content-Type","image/png")
     return response
@@ -80,6 +100,8 @@ def show_image(item_id):
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     return render_template("show_item.html", item = item)
 
 @app.route("/register")
@@ -130,3 +152,7 @@ def logout():
     del session["user_id"]
     del session["username"]
     return redirect("/")
+
+def require_login():
+    if "user_id" not in session:
+        abort(403)
