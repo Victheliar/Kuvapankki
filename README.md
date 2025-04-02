@@ -14,3 +14,19 @@
 * Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan kuvien kuvaukset
 * Käyttäjä näkee sovellukseen lisätyt kuvat
 * Käyttäjä pystyy etsimään kuvia hakusanalla
+## Sovelluksen asennus
+1. Asenna flask - kirjasto:
+   
+   ```
+   $ pip install flask
+   ```
+   
+2. Luo tietokannan taulut ja lisää alkutiedot:
+   ```
+   $ sqlite3 database.db < schema.sql
+   ```
+   
+3. Käynnistä sovellus:
+   ```
+   $ flask run
+   ```
