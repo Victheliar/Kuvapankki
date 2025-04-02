@@ -16,6 +16,11 @@
         <a href="/login">Kirjaudu sisään</a>
         {% endif %}
     </p>
+    {% if session.username %}
+    <h2>
+        Tervetuloa {{ session.username }}!
+    </h2>
+    {% endif %}
     
     <h3>Etsi julkaisu</h3>
     
@@ -41,9 +46,6 @@
     {% endif %}
 
     {% if session.username %}
-    <h3>
-        Tervetuloa {{ session.username }}!
-    </h3>
     <h3>Uusi julkaisu</h3>
 
     <form action="/add_image" method="post" enctype="multipart/form-data">

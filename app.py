@@ -39,7 +39,7 @@ def add_image():
         abort(403)
     if not description:
         description = ""
-    if len(image) > 1024*1024:
+    if len(image) > 5000*5000:
         return "VIRHE: liian suuri kuva"
     items.add_item(user_id, image, description)
     return redirect("/")
@@ -47,6 +47,8 @@ def add_image():
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_item.html", item = item)
@@ -56,6 +58,8 @@ def update_item():
     file = request.files["image"]
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
     description = request.form["description"]
@@ -75,6 +79,8 @@ def update_item():
 def remove_item(item_id):
 
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
 
