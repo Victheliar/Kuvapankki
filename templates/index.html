@@ -16,9 +16,30 @@
         <a href="/login">Kirjaudu sisään</a>
         {% endif %}
     </p>
+    
+    <h3>Etsi julkaisu</h3>
+    
+    <form action="/find_item" method="get">
+        <p>
+        Hakusana: <input type="text" name="query" value="{{ query }}">
+        </p>
+        <input type="submit" value="Etsi">
+    </form>
+    {% if query %}
+    <h4>Tulokset</h4>
+
+    <hr />
+    {% for item in results %}
+    <img src="/image/{{ item.id }}" />
     <p>
-        <a href="/find_item">Etsi ilmoitus</a>
+
     </p>
+    <p>{{ item.description }}</p>
+    <a href="/item/{{ item.id }}">Katso julkaisu</a>
+    <hr />
+    {% endfor %}
+    {% endif %}
+
     {% if session.username %}
     <h3>
         Tervetuloa {{ session.username }}!
