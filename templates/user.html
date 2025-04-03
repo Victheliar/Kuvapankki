@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Käyttäjäsivu</title>
+</head>
+
+<body>
+    <h1>Käyttäjä {{ user.username }}</h1>
+    <a href="/">Takaisin</a>
+
+    <p>
+        Käyttäjä on julkaissut {{ posts | count }} kuvaa.
+    </p>
+    <hr />
+    {%for post in posts%}
+    <img src="/image/{{ post.id }}" />
+    <p>
+
+    </p>
+    <p>{{ post.description }}</p>
+    <a href="/item/{{ post.id }}">Katso julkaisu</a>
+    <hr />
+    {%endfor%}
+</body>
+</html>

@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash
 import db
 import config
 import items
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -15,6 +16,14 @@ def index():
     all_images = items.get_images()
     all_items = items.get_items()
     return render_template("index.html", images = all_images, items = all_items)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    posts = users.get_posts(user_id)
+    return render_template("user.html", user = user, posts = posts)
 
 @app.route("/find_item")
 def find_item():
