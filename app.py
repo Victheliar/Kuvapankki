@@ -55,6 +55,7 @@ def add_image():
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
+    require_login()
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -64,6 +65,7 @@ def edit_item(item_id):
 
 @app.route("/update_item", methods = ["POST"])
 def update_item():
+    require_login()
     file = request.files["image"]
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -87,6 +89,7 @@ def update_item():
 @app.route("/remove_item/<int:item_id>", methods = ["GET","POST"])
 def remove_item(item_id):
 
+    require_login()
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -164,8 +167,9 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
 
 def require_login():
