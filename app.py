@@ -5,6 +5,7 @@ import db
 import config
 import items
 import users
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -31,6 +32,7 @@ def add_profile_picture():
         return render_template("add_profile_picture.html")
 
     if request.method == "POST":
+        check_csrf()
         file = request.files["picture"]
         if not file.filename.endswith(".png"):
             return "VIRHE: väärä tiedostomuoto"
@@ -65,6 +67,7 @@ def find_item():
 @app.route("/add_image", methods = ["POST"])
 def add_image():
     require_login()
+    check_csrf()
     file = request.files["image"]
     if not file.filename.endswith(".png"):
         return "VIRHE: väärä tiedostomuoto"
@@ -93,6 +96,7 @@ def edit_item(item_id):
 @app.route("/update_item", methods = ["POST"])
 def update_item():
     require_login()
+    check_csrf()
     file = request.files["image"]
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -127,6 +131,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item = item)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -182,6 +187,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
@@ -195,4 +201,11 @@ def logout():
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)

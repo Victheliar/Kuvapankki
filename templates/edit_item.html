@@ -16,6 +16,7 @@
             <textarea name="description" rows="8" cols="60" maxlength="100">{{ item.description }}</textarea>
         </p>
         <input type="hidden" name="item_id" value="{{ item.id }}"/>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Päivitä julkaisua" />
     </form>
 </body>

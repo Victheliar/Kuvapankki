@@ -9,6 +9,7 @@
     <h1>Julkaisun poisto</h1>
     <p>Haluatko varmasti poistaa tämän julkaisun?</p>
     <form action="/remove_item/{{ item.id }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" name="remove" value="Posta julkaisu" />
         <input type="submit" name="back" value="Palaa takaisin" />
     </form>
