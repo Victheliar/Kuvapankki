@@ -44,7 +44,7 @@ def add_image():
     image = file.read()
     user_id = session["user_id"]
     description = request.form["description"]
-    if len(description) > 5000 or not image:
+    if len(description) > 100 or not image:
         abort(403)
     if not description:
         description = ""
@@ -77,7 +77,7 @@ def update_item():
     if not file.filename.endswith(".png"):
         return "VIRHE: väärä tiedostomuoto"
     image = file.read()
-    if len(description) > 5000 or not image:
+    if len(description) > 100 or not image:
         abort(403)
     if not description:
         description = ""
