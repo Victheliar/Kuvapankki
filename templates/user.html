@@ -7,6 +7,10 @@
 
 <body>
     <h1>Käyttäjä {{ user.username }}</h1>
+    <a href="/">Takaisin</a>
+    <p>
+
+    </p>
     {% if user.has_pfp %}
     <img src="/pfp/{{ user.id }}" />
     {% endif %}
@@ -16,7 +20,6 @@
     {% if user.id == session.user_id%}
     <a href="/add_profile_picture">Lisää profiilikuva</a>
     {% endif %}
-    <a href="/">Takaisin</a>
 
     <p>
         Käyttäjä on julkaissut {{ posts | count }} kuvaa.
