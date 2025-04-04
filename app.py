@@ -25,6 +25,35 @@ def show_user(user_id):
     posts = users.get_posts(user_id)
     return render_template("user.html", user = user, posts = posts)
 
+@app.route("/add_profile_picture", methods=["GET", "POST"])
+def add_profile_picture():
+    require_login()
+
+    if request.method == "GET":
+        return render_template("add_profile_picture.html")
+
+    if request.method == "POST":
+        file = request.files["picture"]
+        if not file.filename.endswith(".png"):
+            return "VIRHE: väärä tiedostomuoto"
+
+        picture = file.read()
+        if len(picture) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
+
+        user_id = session["user_id"]
+        users.update_picture(user_id, picture)
+        return redirect("/user/" + str(user_id))
+
+@app.route("/pfp/<int:user_id>")
+def show_profile_picture(user_id):
+    picture = users.get_profile_picture(user_id)
+    if not picture:
+        abort(404)
+    response = make_response(bytes(picture))
+    response.headers.set("Content-Type", "image/png")
+    return response
+
 @app.route("/find_item")
 def find_item():
     query = request.args.get("query")
