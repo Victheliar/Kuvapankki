@@ -1,8 +1,20 @@
 import db
 
-def add_item(user_id, image, description):
+def add_item(user_id, image, description, classes):
     sql = """INSERT INTO Items(user_id, images, description) VALUES(?, ?, ?)"""
     db.execute(sql, [user_id, image, description])
+
+    item_id = db.last_insert_id()
+    sql = "INSERT INTO Item_classes(item_id, title, value) VALUES(?, ?, ?)"
+    for category in classes["categories"]:
+        db.execute(sql, [item_id, "category", category])
+
+    for topic in classes["topics"]:
+        db.execute(sql, [item_id, "topic", topic])
+
+def get_classes(item_id):
+    sql = "SELECT title, value FROM Item_classes WHERE item_id = ?"
+    return db.query(sql, [item_id])
 
 def get_images():
     sql = "SELECT id, images FROM Items ORDER BY id DESC"

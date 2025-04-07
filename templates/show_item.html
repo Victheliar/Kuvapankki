@@ -20,6 +20,26 @@
     <p>
         Kuvaus: {{ item.description }}
     </p>
+    {% if classes %}
+    <p>
+       Kategoriat:
+       <ul>
+       {% for class in classes %}
+       {% if class.title == "category"%}
+       <li>{{ class.value }}</li>
+       {% endif %}
+       {% endfor %}
+       </ul>
+       Aiheet:
+       <ul>
+        {% for class in classes %}
+        {% if class.title == "topic"%}
+        <li>{{ class.value }}</li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
 
     <p>
         <a href="/">Takaisin</a>
