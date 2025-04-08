@@ -6,11 +6,8 @@ def add_item(user_id, image, description, classes):
 
     item_id = db.last_insert_id()
     sql = "INSERT INTO Item_classes(item_id, title, value) VALUES(?, ?, ?)"
-    for category in classes["categories"]:
-        db.execute(sql, [item_id, "category", category])
-
-    for topic in classes["topics"]:
-        db.execute(sql, [item_id, "topic", topic])
+    for title, value in classes:
+        db.execute(sql, [item_id, title, value])
 
 def get_classes(item_id):
     sql = "SELECT title, value FROM Item_classes WHERE item_id = ?"

@@ -22,22 +22,12 @@
     </p>
     {% if classes %}
     <p>
-       Kategoriat:
-       <ul>
-       {% for class in classes %}
-       {% if class.title == "category"%}
-       <li>{{ class.value }}</li>
-       {% endif %}
-       {% endfor %}
-       </ul>
-       Aiheet:
+       Luokat:
        <ul>
         {% for class in classes %}
-        {% if class.title == "topic"%}
-        <li>{{ class.value }}</li>
-        {% endif %}
+        <li>{{ class.title }}: {{ class.value }}</li>
         {% endfor %}
-        </ul>
+       </ul>
     </p>
     {% endif %}
 

@@ -78,16 +78,16 @@ def add_image():
         abort(403)
     if not description:
         description = ""
-    if len(image) > 5000*5000:
+    if len(image) > 1024*1024:
         return "VIRHE: liian suuri kuva"
 
-    classes = {}
-    categories = request.form.getlist("category")
-    if categories:
-        classes["categories"] = categories
-    topics = request.form.getlist("topic")
-    if topics:
-        classes["topics"] = topics
+    classes = []
+    category = request.form["category"]
+    if category:
+        classes.append(("Kategoria", category))
+    topic = request.form["topic"]
+    if topic:
+        classes.append(("Aihe/Sisältö", topic))
     items.add_item(user_id, image, description, classes)
     return redirect("/")
 

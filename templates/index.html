@@ -57,18 +57,12 @@
             <textarea name="description" rows="8" cols="60" maxlength="100"></textarea>
         </p>
         <p>
-            Kategoriat: <br />
-            <input type="checkbox" name="category" value="valokuva" /> valokuva
-            <input type="checkbox" name="category" value="maalaus" /> maalaus
-            <input type="checkbox" name="category" value="piirros" /> piirros
-            <input type="checkbox" name="category" value="veistos" /> veistos
+            Kategoria: <br />
+            <input type="text" name="category" />
         </p>
         <p>
             Aihe/Sisältö: <br />
-            <input type="checkbox" name="topic" value="muotokuva" /> muotokuva
-            <input type="checkbox" name="topic" value="maisema" /> maisema
-            <input type="checkbox" name="topic" value="omaperäinen työ" /> omaperäinen työ
-            <input type="checkbox" name="topic" value="fanityö" /> fanityö
+            <input type="text" name="topic" />
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Julkaise kuva" />
