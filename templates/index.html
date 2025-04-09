@@ -24,7 +24,7 @@
     
     <h3>Etsi julkaisu</h3>
     
-    <form action="/find_item" method="get">
+    <form action="/" method="get">
         <p>
         Hakusana: <input type="text" name="query" value="{{ query }}">
         </p>
@@ -32,7 +32,9 @@
     </form>
     {% if query %}
     <h4>Tulokset</h4>
-
+    <p>
+        <a href="/">Takaisin</a>
+    </p>
     <hr />
     {% for item in results %}
     <img src="/image/{{ item.id }}" />
@@ -52,17 +54,17 @@
         <p>
             Kuva: <input type="file" name="image" accept=".png" required />
         </p>
+        {% for class in classes %}
+        <p>
+            {{ class }}: <br />
+            {% for option in classes[class] %}
+            <input type="checkbox" name="classes" value="{{ class }}:{{ option }}" /> {{ option }}
+            {% endfor %}
+        </p>
+        {% endfor %}
         <p>
             Kuvaus: <br />
             <textarea name="description" rows="8" cols="60" maxlength="100"></textarea>
-        </p>
-        <p>
-            Kategoria: <br />
-            <input type="text" name="category" />
-        </p>
-        <p>
-            Aihe/Sisältö: <br />
-            <input type="text" name="topic" />
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Julkaise kuva" />

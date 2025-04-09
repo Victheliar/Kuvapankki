@@ -12,6 +12,12 @@ CREATE TABLE Items (
     images BLOB
 );
 
+CREATE TABLE Classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+);
+
 CREATE TABLE Item_classes (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES Items,

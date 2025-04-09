@@ -9,6 +9,17 @@ def add_item(user_id, image, description, classes):
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
 
+def get_all_classes():
+    sql = "SELECT title, value FROM Classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+    return classes
+
 def get_classes(item_id):
     sql = "SELECT title, value FROM Item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])

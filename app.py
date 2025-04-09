@@ -14,7 +14,14 @@ app.secret_key = config.secret_key
 def index():
     all_images = items.get_images()
     all_items = items.get_items()
-    return render_template("index.html", images = all_images, items = all_items)
+    classes = items.get_all_classes()
+    query = request.args.get("query")
+    if query:
+        results = items.find_items(query)
+    else:
+        query = ""
+        results = []
+    return render_template("index.html", images = all_images, items = all_items, classes = classes, query = query, results = results)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -54,16 +61,6 @@ def show_profile_picture(user_id):
     response.headers.set("Content-Type", "image/png")
     return response
 
-@app.route("/find_item")
-def find_item():
-    query = request.args.get("query")
-    if query:
-        results = items.find_items(query)
-    else:
-        query = ""
-        results = []
-    return render_template("find_item.html", query = query, results = results)
-
 @app.route("/add_image", methods = ["POST"])
 def add_image():
     require_login()
@@ -80,14 +77,11 @@ def add_image():
         description = ""
     if len(image) > 1024*1024:
         return "VIRHE: liian suuri kuva"
-
     classes = []
-    category = request.form["category"]
-    if category:
-        classes.append(("Kategoria", category))
-    topic = request.form["topic"]
-    if topic:
-        classes.append(("Aihe/Sisältö", topic))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
     items.add_item(user_id, image, description, classes)
     return redirect("/")
 
