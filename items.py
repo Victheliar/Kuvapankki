@@ -9,6 +9,18 @@ def add_item(user_id, image, description, classes):
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
 
+def add_comment(item_id, user_id, comment):
+    sql = """INSERT INTO Comments(post_id, user_id, content)
+            VALUES(?, ?, ?)"""
+    db.execute(sql, [item_id, user_id, comment])
+
+def get_comments(item_id):
+    sql = """SELECT Comments.content, Users.id user_id, Users.username
+            FROM Comments, Users
+            WHERE Comments.post_id = ? AND Comments.user_id = Users.id
+            ORDER BY Comments.id DESC"""
+    return db.query(sql, [item_id])
+
 def get_all_classes():
     sql = "SELECT title, value FROM Classes ORDER BY id"
     result = db.query(sql)

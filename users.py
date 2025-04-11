@@ -39,7 +39,6 @@ def check_login(username, password):
 
     if not result:
         return None
-    print("testi", result)
     user_id = result[0]["id"]
     password_hash = result[0]["password_hash"]
 

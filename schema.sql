@@ -28,7 +28,6 @@ CREATE TABLE Item_classes (
 CREATE TABLE Comments (
     id INTEGER PRIMARY KEY,
     content TEXT,
-    sent_at TEXT,
     user_id INTEGER REFERENCES Users,
     post_id INTEGER REFERENCES Items
 );
