@@ -1,5 +1,9 @@
 import db
 
+def item_count():
+    sql = "SELECT COUNT(*) FROM Items"
+    return db.query(sql)[0][0]
+
 def add_item(user_id, image, description, classes):
     sql = """INSERT INTO Items(user_id, images, description) VALUES(?, ?, ?)"""
     db.execute(sql, [user_id, image, description])
@@ -36,13 +40,23 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM Item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
-def get_images():
-    sql = "SELECT id, images FROM Items ORDER BY id DESC"
-    return db.query(sql)
+def get_images(page, page_size):
+    sql = """SELECT id, images
+    FROM Items
+    ORDER BY id DESC
+    LIMIT ? OFFSET ?"""
+    limit = page_size
+    offset = page_size * (page - 1)
+    return db.query(sql, [limit, offset])
 
-def get_items():
-    sql = "SELECT id, description FROM Items ORDER BY id DESC"
-    return db.query(sql)
+def get_items(page, page_size):
+    sql = """SELECT id, description
+    FROM Items
+    ORDER BY id DESC
+    LIMIT ? OFFSET ?"""
+    limit = page_size
+    offset = page_size * (page - 1)
+    return db.query(sql, [limit, offset])
 
 def get_image(item_id):
     sql = "SELECT images FROM Items WHERE id = ?"

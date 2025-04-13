@@ -6,14 +6,26 @@ import config
 import items
 import users
 import secrets
+import math
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 @app.route("/")
-def index():
-    all_images = items.get_images()
-    all_items = items.get_items()
+@app.route("/<int:page>")
+def index(page=1):
+    page_size = 10
+    item_count = items.item_count()
+    page_count = math.ceil(item_count / page_size)
+    page_count = max(page_count, 1)
+    
+    if page < 1:
+        return redirect("/1")
+    if page > page_count:
+        return redirect("/" + str(page_count))
+    
+    all_images = items.get_images(page, page_size)
+    all_items = items.get_items(page, page_size)
     classes = items.get_all_classes()
     query = request.args.get("query")
     if query:
@@ -21,7 +33,8 @@ def index():
     else:
         query = ""
         results = []
-    return render_template("index.html", images = all_images, items = all_items, classes = classes, query = query, results = results)
+    return render_template("index.html", images = all_images, items = all_items, classes = classes, query = query, 
+                           results = results, page=page, page_count=page_count)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
