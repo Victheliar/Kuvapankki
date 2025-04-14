@@ -79,6 +79,10 @@ def update_item(item_id, image, description):
     db.execute(sql, [image, description, item_id])
 
 def remove_item(item_id):
+    sql = "DELETE FROM Item_classes WHERE item_id = ?"
+    db.execute(sql, [item_id])
+    sql = "DELETE FROM Comments WHERE post_id = ?"
+    db.execute(sql, [item_id])
     sql = "DELETE FROM Items WHERE id = ?"
     db.execute(sql, [item_id])
 

@@ -20,7 +20,8 @@
     <img src="/image/{{ item.id }}"/>
 
     <p>
-        Kuvaus: {{ item.description }}
+        Kuvaus:
+        <p>{{ item.description | safe }}</p>
     </p>
     {% if classes %}
     <p>
@@ -56,7 +57,7 @@
     <hr />
     {% for comment in comments %}
     <p>
-        <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.content }}
+        <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.content | safe }}
     </p>
     <hr />
     {% endfor %}

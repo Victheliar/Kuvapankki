@@ -79,7 +79,7 @@
     <p>
 
     </p>
-    <p>{{ item.description }}</p>
+    <p>{{ item.description | safe }}</p>
     <a href="/item/{{ item.id }}">Katso julkaisua</a>
     <hr />
     {% endfor %}

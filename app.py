@@ -88,6 +88,7 @@ def add_image():
         abort(403)
     if not description:
         description = ""
+    description = description.replace("\n", "<br />")
     if len(image) > 1024*1024:
         return "VIRHE: liian suuri kuva"
     classes = []
@@ -102,10 +103,10 @@ def add_image():
 def add_comment():
     require_login()
     check_csrf()
-    print("testi")
     comment = request.form["comment"]
     if len(comment) > 500 or not comment:
         abort(403)
+    comment = comment.replace("\n", "<br />")
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -143,6 +144,7 @@ def update_item():
         abort(403)
     if not description:
         description = ""
+    description = description.replace("\n", "<br />")
     if len(image) > 1024*1024:
         return "VIRHE: liian suuri kuva"
     items.update_item(item_id, image, description)
