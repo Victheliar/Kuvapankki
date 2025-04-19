@@ -31,3 +31,6 @@ CREATE TABLE Comments (
     user_id INTEGER REFERENCES Users,
     post_id INTEGER REFERENCES Items
 );
+
+
+CREATE INDEX idx_post_comments ON Comments (post_id);
