@@ -8,6 +8,12 @@
 <body>
     <h1>Kuvapankki</h1>
 
+    {% if session.username %}
+    <h2>
+        Tervetuloa {{ session.username }}!
+    </h2>
+    {% endif %}
+
     <p>
         <a href="/register">Luo tunnus</a> |
         {% if session.user_id %}
@@ -16,11 +22,6 @@
         <a href="/login">Kirjaudu sisään</a>
         {% endif %}
     </p>
-    {% if session.username %}
-    <h2>
-        Tervetuloa {{ session.username }}!
-    </h2>
-    {% endif %}
     
     <h3>Etsi julkaisu</h3>
     
