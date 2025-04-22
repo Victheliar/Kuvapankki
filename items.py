@@ -90,8 +90,11 @@ def remove_item(item_id):
     db.execute(sql, [item_id])
 
 def find_items(query):
-    sql = """SELECT id, images, description
-            FROM Items
+    sql = """SELECT Items.id, Items.images, Items.description, Users.id,
+                    Users.username, COUNT(Comments.id) comment_count
+            FROM Items JOIN Users ON Items.user_id = Users.id
+                        LEFT JOIN Comments ON Items.id = Comments.post_id
             WHERE description LIKE ?
-            ORDER BY id DESC"""
+            GROUP BY Items.id
+            ORDER BY Items.id DESC"""
     return db.query(sql, ["%" + query + "%"])
