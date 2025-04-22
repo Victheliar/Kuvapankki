@@ -84,7 +84,7 @@ def add_image():
     image = file.read()
     user_id = session["user_id"]
     description = request.form["description"]
-    if len(description) > 100 or not image:
+    if len(description) > 5000 or not image:
         abort(403)
     if not description:
         description = ""
@@ -104,7 +104,7 @@ def add_comment():
     require_login()
     check_csrf()
     comment = request.form["comment"]
-    if len(comment) > 500 or not comment:
+    if len(comment) > 5000 or not comment:
         abort(403)
     comment = comment.replace("\n", "<br />")
     item_id = request.form["item_id"]
@@ -140,7 +140,7 @@ def update_item():
     if not file.filename.endswith(".png"):
         return "VIRHE: väärä tiedostomuoto"
     image = file.read()
-    if len(description) > 100 or not image:
+    if len(description) > 5000 or not image:
         abort(403)
     if not description:
         description = ""

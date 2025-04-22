@@ -50,9 +50,12 @@ def get_images(page, page_size):
     return db.query(sql, [limit, offset])
 
 def get_items(page, page_size):
-    sql = """SELECT id, description
-    FROM Items
-    ORDER BY id DESC
+    sql = """SELECT Items.id, Items.description, Users.id user_id,
+                    Users.username, COUNT(Comments.id) comment_count
+    FROM Items JOIN Users ON Items.user_id = Users.id
+                LEFT JOIN Comments ON Items.id = Comments.post_id
+    GROUP BY Items.id
+    ORDER BY Items.id DESC
     LIMIT ? OFFSET ?"""
     limit = page_size
     offset = page_size * (page - 1)

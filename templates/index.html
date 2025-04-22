@@ -22,7 +22,7 @@
         {% endfor %}
         <p>
             Kuvaus: <br />
-            <textarea name="description" rows="8" cols="60" maxlength="100"></textarea>
+            <textarea name="description" rows="8" cols="60" maxlength="5000"></textarea>
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Julkaise kuva" />
@@ -57,13 +57,17 @@
 
 <hr />
 {% for item in items %}
+<div class="item">
+Julkaisija: <a href="/user/{{ item.user_id }}">{{ item.username }}</a><br />
+
 <img src = "/image/{{ item.id }}" />
 <p>
 
 </p>
 <p>{{ item.description | safe }}</p>
+Kommentteja: {{ item.comment_count }}<br />
 <a href="/item/{{ item.id }}">Katso julkaisua</a>
-<hr />
+</div>
 {% endfor %}
 
 <p>
@@ -71,5 +75,4 @@
     Sivu {{ page }}/{{ page_count }}
     <a href="/{{ page + 1}}">&gt;&gt;</a>
 </p>
-<hr />
 {% endblock %}
