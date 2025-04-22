@@ -1,38 +1,32 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Käyttäjäsivu</title>
-</head>
+{% block title %}Käyttäjä {{user.username}}{% endblock %}
+{% block content %}
+<h1>Käyttäjä {{ user.username }}</h1>
+<p>
 
-<body>
-    <h1>Käyttäjä {{ user.username }}</h1>
-    <a href="/">Takaisin</a>
-    <p>
+</p>
+{% if user.has_pfp %}
+<img src="/pfp/{{ user.id }}" />
+{% endif %}
+<p>
 
-    </p>
-    {% if user.has_pfp %}
-    <img src="/pfp/{{ user.id }}" />
-    {% endif %}
-    <p>
+</p>
+{% if user.id == session.user_id%}
+<a href="/add_profile_picture">Lisää profiilikuva</a>
+{% endif %}
 
-    </p>
-    {% if user.id == session.user_id%}
-    <a href="/add_profile_picture">Lisää profiilikuva</a>
-    {% endif %}
+<p>
+    Käyttäjä on julkaissut {{ posts | count }} kuvaa.
+</p>
+<hr />
+{%for post in posts%}
+<img src="/image/{{ post.id }}" />
+<p>
 
-    <p>
-        Käyttäjä on julkaissut {{ posts | count }} kuvaa.
-    </p>
-    <hr />
-    {%for post in posts%}
-    <img src="/image/{{ post.id }}" />
-    <p>
-
-    </p>
-    <p>{{ post.description }}</p>
-    <a href="/item/{{ post.id }}">Katso julkaisu</a>
-    <hr />
-    {%endfor%}
-</body>
-</html>
+</p>
+<p>{{ post.description | safe }}</p>
+<a href="/item/{{ post.id }}">Katso julkaisu</a>
+<hr />
+{%endfor%}
+{% endblock %}

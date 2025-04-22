@@ -1,55 +1,12 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Kuvapankki</title>
-</head>
-
-<body>
-    <h1>Kuvapankki</h1>
-
-    {% if session.username %}
+{% block title %}Kuvapankki{% endblock %}
+{% block content %}
+{% if session.username %}
     <h2>
         Tervetuloa {{ session.username }}!
     </h2>
-    {% endif %}
-
-    <p>
-        <a href="/register">Luo tunnus</a> |
-        {% if session.user_id %}
-        <a href="/logout">Kirjaudu ulos</a>
-        {% else %}
-        <a href="/login">Kirjaudu sisään</a>
-        {% endif %}
-    </p>
-    
-    <h3>Etsi julkaisu</h3>
-    
-    <form action="/" method="get">
-        <p>
-        Hakusana: <input type="text" name="query" value="{{ query }}">
-        </p>
-        <input type="submit" value="Etsi">
-    </form>
-    {% if query %}
-    <h4>Tulokset</h4>
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
-    <hr />
-    {% for item in results %}
-    <img src="/image/{{ item.id }}" />
-    <p>
-
-    </p>
-    <p>{{ item.description }}</p>
-    <a href="/item/{{ item.id }}">Katso julkaisu</a>
-    <hr />
-    {% endfor %}
-    {% endif %}
-
-    {% if session.username %}
-    <h3>Uusi julkaisu</h3>
+    <h2>Uusi julkaisu</h2>
 
     <form action="/add_image" method="post" enctype="multipart/form-data">
         <p>
@@ -70,28 +27,49 @@
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Julkaise kuva" />
     </form>
-    {% endif %}
+{% endif %}
+<h2>Etsi julkaisu</h2>
 
-    <h3>Julkaisut</h3>
-
+    <form action="/" method="get">
+        <p>
+        Hakusana: <input type="text" name="query" value="{{ query }}">
+        </p>
+        <input type="submit" value="Etsi">
+    </form>
+    {% if query %}
+    <h2>Tulokset</h2>
+    <p>
+        <a href="/">Takaisin</a>
+    </p>
     <hr />
-    {% for item in items %}
-    <img src = "/image/{{ item.id }}" />
+    {% for item in results %}
+    <img src="/image/{{ item.id }}" />
     <p>
 
     </p>
-    <p>{{ item.description | safe }}</p>
-    <a href="/item/{{ item.id }}">Katso julkaisua</a>
+    <p>{{ item.description }}</p>
+    <a href="/item/{{ item.id }}">Katso julkaisu</a>
     <hr />
     {% endfor %}
+    {% endif %}
 
-    <p>
-        <a href="/{{ page - 1 }}">&lt;&lt;</a>
-        Sivu {{ page }}/{{ page_count }}
-        <a href="/{{ page + 1}}">&gt;&gt;</a>
-    </p>
-    <hr />
+<h3>Julkaisut</h3>
 
-</body>
+<hr />
+{% for item in items %}
+<img src = "/image/{{ item.id }}" />
+<p>
 
-</html>
+</p>
+<p>{{ item.description | safe }}</p>
+<a href="/item/{{ item.id }}">Katso julkaisua</a>
+<hr />
+{% endfor %}
+
+<p>
+    <a href="/{{ page - 1 }}">&lt;&lt;</a>
+    Sivu {{ page }}/{{ page_count }}
+    <a href="/{{ page + 1}}">&gt;&gt;</a>
+</p>
+<hr />
+{% endblock %}

@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Julkaisun poisto</title>
-</head>
+{% block title %}Julkaisun poisto{% endblock %}
+{% block content %}
+<h2>Julkaisun poisto</h2>
+<p>Haluatko varmasti poistaa tämän julkaisun?</p>
+<form action="/remove_item/{{ item.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" name="remove" value="Posta julkaisu" />
+    <input type="submit" name="back" value="Palaa takaisin" />
+</form>
+<p>
 
-<body>
-    <h1>Julkaisun poisto</h1>
-    <p>Haluatko varmasti poistaa tämän julkaisun?</p>
-    <form action="/remove_item/{{ item.id }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-        <input type="submit" name="remove" value="Posta julkaisu" />
-        <input type="submit" name="back" value="Palaa takaisin" />
-    </form>
-    <p>
-
-    </p>
-    <img src="/image/{{ item.id }}" />
-    <p>Kuvaus: {{ item.description }}</p>
-</body>
-
-</html>
+</p>
+<img src="/image/{{ item.id }}" />
+<p>Kuvaus: {{ item.description }}</p>
+{% endblock %}
