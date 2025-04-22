@@ -92,7 +92,7 @@ def add_image():
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 100*1024:
+    if len(image) > 1024*1024:
         flash("VIRHE: liian suuri kuva")
         return redirect("/")
     classes = []
@@ -101,6 +101,7 @@ def add_image():
             parts = entry.split(":")
             classes.append((parts[0], parts[1]))
     items.add_item(user_id, image, description, classes)
+    flash("Julkaisu onnistui")
     return redirect("/")
 
 @app.route("/add_comment", methods = ["POST"])
@@ -150,7 +151,7 @@ def update_item():
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 100*1024:
+    if len(image) > 1024*1024:
         flash("VIRHE: liian suuri kuva")
         return redirect("/edit_item/" + str(item_id))
     items.update_item(item_id, image, description)
