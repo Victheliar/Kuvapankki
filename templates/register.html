@@ -3,6 +3,11 @@
 {% block title %}Luo tunnus{% endblock %}
 {% block content %}
 <h2>Luo tunnus</h2>
+{% for message in get_flashed_messages() %}
+<p>
+    <b>{{ message }}</b>
+</p>
+{% endfor %}
 <form action="/create" method="post">
     <p>
         Tunnus: <br />

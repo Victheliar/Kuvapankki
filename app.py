@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session, make_response, abort
+from flask import redirect, flash, render_template, request, session, make_response, abort
 import db
 import config
 import items
@@ -55,11 +55,13 @@ def add_profile_picture():
         check_csrf()
         file = request.files["picture"]
         if not file.filename.endswith(".png"):
-            return "VIRHE: väärä tiedostomuoto"
+            flash("VIRHE: Lähettämäsi tiedosto ei ole png-tiedosto")
+            return redirect("/add_profile_picture")
 
         picture = file.read()
         if len(picture) > 100 * 1024:
-            return "VIRHE: liian suuri kuva"
+            flash("VIRHE: liian suuri kuva")
+            return redirect("/add_profile_picture")
 
         user_id = session["user_id"]
         users.update_picture(user_id, picture)
@@ -80,7 +82,8 @@ def add_image():
     check_csrf()
     file = request.files["image"]
     if not file.filename.endswith(".png"):
-        return "VIRHE: väärä tiedostomuoto"
+        flash("VIRHE: Lähettämäsi tiedosto ei ole png-tiedosto")
+        return redirect("/")
     image = file.read()
     user_id = session["user_id"]
     description = request.form["description"]
@@ -89,8 +92,9 @@ def add_image():
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 1024*1024:
-        return "VIRHE: liian suuri kuva"
+    if len(image) > 100*1024:
+        flash("VIRHE: liian suuri kuva")
+        return redirect("/")
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
@@ -138,15 +142,17 @@ def update_item():
         abort(403)
     description = request.form["description"]
     if not file.filename.endswith(".png"):
-        return "VIRHE: väärä tiedostomuoto"
+        flash("VIRHE: Lähettämäsi tiedosto ei ole png-tiedosto")
+        return redirect("/edit_item/" + str(item_id))
     image = file.read()
     if len(description) > 5000 or not image:
         abort(403)
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 1024*1024:
-        return "VIRHE: liian suuri kuva"
+    if len(image) > 100*1024:
+        flash("VIRHE: liian suuri kuva")
+        return redirect("/edit_item/" + str(item_id))
     items.update_item(item_id, image, description)
     return redirect("/item/" + str(item_id))
 
@@ -200,14 +206,15 @@ def create():
     password2 = request.form["password2"]
 
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        flash("VIRHE: Salasanat eivät täsmää")
+        return redirect("/register")
 
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
-
-    return "Tunnus luotu"
+        flash("VIRHE: Tunnus on jo varattu")
+        return redirect("/register")
+    return redirect("/")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -225,7 +232,8 @@ def login():
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: Väärä tunnus tai salasana!")
+            return redirect("/login")
 
 @app.route("/logout")
 def logout():
