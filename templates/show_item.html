@@ -18,8 +18,8 @@
     <p>{{ item.description | safe }}</p>
 </p>
 {% if classes %}
-<p>
-    Kategoria(t):
+<ul>
+    <li>Kategoria(t):</li>
     <ul>
     {% for class in classes %}
         {% if class.title == "Kategoria"%}
@@ -29,7 +29,7 @@
     </ul>
 </p>
 <p>
-    Aihee(t):
+    <li>Aihee(t):</li>
     <ul>
         {% for class in classes %}
             {% if class.title == "Aihe"%}
@@ -37,8 +37,9 @@
             {% endif %}
         {% endfor %}
     </ul>
-    </p>
+</ul>
 {% endif %}
+{% if session.user_id%}
 <h3>Jätä kommentti</h3>
 <form action="/add_comment" method="post">
     Kommentti: <br />
@@ -47,6 +48,7 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Julkaise kommentti" />
 </form>
+{% endif %}
 <h3>Kommentit</h3>
 <hr />
 {% for comment in comments %}
