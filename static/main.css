@@ -11,3 +11,11 @@ body {
     padding: 0.2em 0.5em;
     background-color: rgb(223, 231, 240);
 }
+
+.info {
+  border: 2px solid black;
+  margin: 1em;
+  padding: 0.5em;
+  background-color: rgb(250, 85, 55);
+  color: solid black;
+}
