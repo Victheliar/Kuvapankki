@@ -171,6 +171,7 @@ def update_item():
         flash("VIRHE: liian suuri kuva")
         return redirect("/edit_item/" + str(item_id))
 
+    all_classes = items.get_all_classes()
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
