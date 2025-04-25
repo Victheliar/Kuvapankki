@@ -95,11 +95,18 @@ def add_image():
     if len(image) > 1024*1024:
         flash("VIRHE: liian suuri kuva")
         return redirect("/")
+
+    all_classes = items.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
     items.add_item(user_id, image, description, classes)
     flash("Julkaisu onnistui")
     return redirect("/")
@@ -167,8 +174,12 @@ def update_item():
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
 
     items.update_item(item_id, image, description, classes)
     return redirect("/item/" + str(item_id))

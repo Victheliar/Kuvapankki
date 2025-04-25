@@ -5,10 +5,12 @@ def item_count():
     return db.query(sql)[0][0]
 
 def add_item(user_id, image, description, classes):
+
     sql = """INSERT INTO Items(user_id, images, description) VALUES(?, ?, ?)"""
     db.execute(sql, [user_id, image, description])
 
     item_id = db.last_insert_id()
+
     sql = "INSERT INTO Item_classes(item_id, title, value) VALUES(?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
