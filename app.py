@@ -226,24 +226,30 @@ def show_item(item_id):
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    return render_template("register.html", filled = {})
 
 @app.route("/create", methods = ["POST"])
 def create():
     username = request.form["username"]
+    if len(username) > 16:
+        abort(403)
     password1 = request.form["password1"]
     password2 = request.form["password2"]
 
     if password1 != password2:
         flash("VIRHE: Salasanat eivät täsmää")
-        return redirect("/register")
+        filled = {"username": username}
+        return render_template("register.html", filled=filled)
 
     try:
         users.create_user(username, password1)
+        flash("Tunnuksen luominen onnistui!")
+        return redirect("/")
+
     except sqlite3.IntegrityError:
         flash("VIRHE: Tunnus on jo varattu")
-        return redirect("/register")
-    return redirect("/")
+        filled = {"username": username}
+        return render_template("register.html", filled=filled)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
