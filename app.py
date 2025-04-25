@@ -60,7 +60,7 @@ def add_profile_picture():
 
         picture = file.read()
         if len(picture) > 100 * 1024:
-            flash("VIRHE: liian suuri kuva")
+            flash("VIRHE: Liian suuri kuva")
             return redirect("/add_profile_picture")
 
         user_id = session["user_id"]
@@ -93,7 +93,7 @@ def add_image():
         description = ""
     description = description.replace("\n", "<br />")
     if len(image) > 1024*1024:
-        flash("VIRHE: liian suuri kuva")
+        flash("VIRHE: Liian suuri kuva")
         return redirect("/")
 
     all_classes = items.get_all_classes()
@@ -168,7 +168,7 @@ def update_item():
         description = ""
     description = description.replace("\n", "<br />")
     if len(image) > 1024*1024:
-        flash("VIRHE: liian suuri kuva")
+        flash("VIRHE: Liian suuri kuva")
         return redirect("/edit_item/" + str(item_id))
 
     all_classes = items.get_all_classes()
