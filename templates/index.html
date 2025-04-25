@@ -2,9 +2,9 @@
 
 {% block title %}Kuvapankki{% endblock %}
 {% block content %}
-{% if session.username %}
+{% if session.user_id %}
     <h2>
-        Tervetuloa {{ session.username }}!
+        Tervetuloa <a href="/user/{{ session.user_id }}">{{session.username }}</a>!
     </h2>
     <h2>Uusi julkaisu</h2>
     <form action="/add_image" method="post" enctype="multipart/form-data">
