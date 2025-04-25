@@ -7,7 +7,7 @@
 
 </p>
 {% if user.has_pfp %}
-<img src="/pfp/{{ user.id }}" />
+<img src="/pfp/{{ user.id }}" alt = "Käyttäjän {{ user.username }} profiilikuva" />
 {% endif %}
 <p>
 
@@ -21,12 +21,12 @@
 </p>
 <hr />
 {%for post in posts%}
-<img src="/image/{{ post.id }}" />
+<img src="/image/{{ post.id }}" alt="{{ post.description }}"/>
 <p>
 
 </p>
 <p>{{ post.description | safe }}</p>
-<a href="/item/{{ post.id }}">Katso julkaisu</a>
+<a href="/item/{{ post.id }}">Katso julkaisua</a>
 <hr />
 {%endfor%}
 {% endblock %}
