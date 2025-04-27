@@ -6,7 +6,6 @@ from flask import Flask
 from flask import redirect, flash, render_template, request, session, make_response, abort
 import markupsafe
 
-import db
 import config
 import items
 import users
@@ -27,12 +26,12 @@ def index(page=1):
     item_count = items.item_count()
     page_count = math.ceil(item_count / page_size)
     page_count = max(page_count, 1)
-    
+
     if page < 1:
         return redirect("/1")
     if page > page_count:
         return redirect("/" + str(page_count))
-    
+
     all_images = items.get_images(page, page_size)
     all_items = items.get_items(page, page_size)
     classes = items.get_all_classes()
@@ -42,8 +41,9 @@ def index(page=1):
     else:
         query = ""
         results = []
-    return render_template("index.html", images = all_images, items = all_items, classes = classes, query = query, 
-                           results = results, page=page, page_count=page_count)
+    return render_template("index.html", images = all_images, items = all_items,
+                           classes = classes, query = query, results = results,
+                           page=page, page_count=page_count)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -275,7 +275,7 @@ def login():
             return redirect(next_page)
         else:
             flash("VIRHE: Väärä tunnus tai salasana!")
-            return redirect("/login", next_page=next_page)
+            return render_template("login.html", next_page=next_page)
 
 @app.route("/logout")
 def logout():

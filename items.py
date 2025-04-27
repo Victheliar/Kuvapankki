@@ -65,7 +65,7 @@ def get_items(page, page_size):
 
 def get_image(item_id):
     sql = "SELECT images FROM Items WHERE id = ?"
-    result = db.query(sql, [item_id])    
+    result = db.query(sql, [item_id])
     return result[0][0] if result else None
 
 def get_item(item_id):
