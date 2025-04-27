@@ -15,7 +15,7 @@
 
 <p>
     Kuvaus:
-    <p>{{ item.description | safe }}</p>
+    <p>{{ item.description | show_lines }}</p>
 </p>
 {% if classes %}
 <ul>
@@ -55,7 +55,7 @@
 <hr />
 {% for comment in comments %}
 <p>
-    <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.content | safe }}
+    <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.content | show_lines }}
 </p>
 <hr />
 {% endfor %}

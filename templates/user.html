@@ -25,7 +25,7 @@
 <p>
 
 </p>
-<p>{{ post.description | safe }}</p>
+<p>{{ post.description | show_lines }}</p>
 <a href="/item/{{ post.id }}">Katso julkaisua</a>
 <hr />
 {%endfor%}

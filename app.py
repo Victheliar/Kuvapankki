@@ -7,9 +7,16 @@ import items
 import users
 import secrets
 import math
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 @app.route("/")
 @app.route("/<int:page>")
@@ -91,7 +98,6 @@ def add_image():
         abort(403)
     if not description:
         description = ""
-    description = description.replace("\n", "<br />")
     if len(image) > 100*1024:
         flash("VIRHE: Liian suuri kuva")
         return redirect("/")
@@ -118,7 +124,6 @@ def add_comment():
     comment = request.form["comment"]
     if len(comment) > 5000 or not comment:
         abort(403)
-    comment = comment.replace("\n", "<br />")
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -166,7 +171,6 @@ def update_item():
         abort(403)
     if not description:
         description = ""
-    description = description.replace("\n", "<br />")
     if len(image) > 100*1024:
         flash("VIRHE: Liian suuri kuva")
         return redirect("/edit_item/" + str(item_id))
