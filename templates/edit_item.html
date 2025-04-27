@@ -5,23 +5,26 @@
 <h2>Julkaisun muokkaus</h2>
 <form action="/update_item" method="post" enctype="multipart/form-data">
     <p>
-        Kuva: <input type="file" name="image" accept=".png" required/>
+        <label for="image">Kuva</label>:<br />
+        <input type="file" name="image" id="image" accept=".png" required/>
     </p>
     {% for class in all_classes %}
         <p>
             {{ class }}: <br />
             {% for option in all_classes[class] %}
             {% if option in classes[class] %}
-            <input type="checkbox" name="classes" value="{{ class }}:{{ option }}" checked /> {{ option }}
+            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" checked />
+            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
             {% else %}
-            <input type="checkbox" name="classes" value="{{ class }}:{{ option }}" /> {{ option }}
+            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" />
+            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
             {% endif %}
             {% endfor %}
         </p>
     {% endfor %}
     <p>
-        Kuvaus: <br />
-        <textarea name="description" rows="8" cols="60" maxlength="5000">{{ item.description | show_lines }}</textarea>
+        <label for="description">Kuvaus</label>:<br />
+        <textarea name="description" id="description" rows="8" cols="60" maxlength="5000">{{ item.description }}</textarea>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />

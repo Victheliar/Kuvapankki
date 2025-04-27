@@ -9,19 +9,21 @@
     <h2>Uusi julkaisu</h2>
     <form action="/add_image" method="post" enctype="multipart/form-data">
         <p>
-            Kuva: <input type="file" name="image" accept=".png" required />
+            <label for="image">Kuva</label>:<br />
+            <input type="file" name="image" id="image" accept=".png" required />
         </p>
         {% for class in classes %}
         <p>
             {{ class }}: <br />
             {% for option in classes[class] %}
-            <input type="checkbox" name="classes" value="{{ class }}:{{ option }}" /> {{ option }}
+            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" />
+            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
             {% endfor %}
         </p>
         {% endfor %}
         <p>
-            Kuvaus: <br />
-            <textarea name="description" rows="8" cols="60" maxlength="5000"></textarea>
+            <label for="description">Kuvaus</label>:<br />
+            <textarea name="description" id="description" rows="8" cols="60" maxlength="5000"></textarea>
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Julkaise kuva" />
@@ -31,7 +33,8 @@
 
     <form action="/" method="get">
         <p>
-        Hakusana: <input type="text" name="query" value="{{ query }}">
+        <label for="query">Hakusana</label>:<br />
+        <input type="text" name="query" id="query" value="{{ query }}">
         </p>
         <input type="submit" value="Etsi">
     </form>
