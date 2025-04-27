@@ -9,7 +9,7 @@
     <h2>Uusi julkaisu</h2>
     <form action="/add_image" method="post" enctype="multipart/form-data">
         <p>
-            <label for="image">Kuva</label>:<br />
+            <label for="image">Kuva (.png)</label>:<br />
             <input type="file" name="image" id="image" accept=".png" required />
         </p>
         {% for class in classes %}
