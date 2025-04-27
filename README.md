@@ -6,11 +6,12 @@
 * Käyttäjä näkee sovellukseen lisätyt kuvat
 * Käyttäjä pystyy etsimään kuvia hakusanalla
 * Sovelluksessa on käyttäjäsivut, jotka näyttävät julkaisujen määrän sekä kaikki käyttäjän julkaisemat kuvat
+* Käyttäjä pystyy lisäämään käyttäjäsivulleen profiilikuvan
 * Käyttäjä pystyy valitsemaan julkaisulleen luokittelun
 * Käyttäjä pystyy kommentoimaan muiden käyttäjien kuvia
 
 ## Sovelluksen asennus
-1. Asenna flask - kirjasto:
+1. Asenna `flask` - kirjasto:
    
    ```
    $ pip install flask
