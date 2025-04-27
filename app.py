@@ -92,7 +92,7 @@ def add_image():
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 1024*1024:
+    if len(image) > 100*1024:
         flash("VIRHE: Liian suuri kuva")
         return redirect("/")
 
@@ -167,7 +167,7 @@ def update_item():
     if not description:
         description = ""
     description = description.replace("\n", "<br />")
-    if len(image) > 1024*1024:
+    if len(image) > 100*1024:
         flash("VIRHE: Liian suuri kuva")
         return redirect("/edit_item/" + str(item_id))
 
