@@ -1,13 +1,15 @@
+import math
+import secrets
 import sqlite3
+
 from flask import Flask
 from flask import redirect, flash, render_template, request, session, make_response, abort
+import markupsafe
+
 import db
 import config
 import items
 import users
-import secrets
-import math
-import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
