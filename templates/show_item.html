@@ -48,6 +48,8 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Julkaise kommentti" />
 </form>
+{% else %}
+<p>Jos haluat jättää kommentin, <a href="/login">kirjaudu sisään</a>!</p>
 {% endif %}
 <h3>Kommentit</h3>
 <hr />
