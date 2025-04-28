@@ -100,7 +100,7 @@ def add_image():
         abort(403)
     if not description:
         description = ""
-    if len(image) > 100*1024:
+    if len(image) > 500*1024:
         flash("VIRHE: Liian suuri kuva")
         return redirect("/")
 
@@ -157,7 +157,6 @@ def edit_item(item_id):
 def update_item():
     require_login()
     check_csrf()
-    file = request.files["image"]
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -165,17 +164,10 @@ def update_item():
     if item["user_id"] != session["user_id"]:
         abort(403)
     description = request.form["description"]
-    if not file.filename.endswith(".png"):
-        flash("VIRHE: Lähettämäsi tiedosto ei ole png-tiedosto")
-        return redirect("/edit_item/" + str(item_id))
-    image = file.read()
-    if len(description) > 5000 or not image:
+    if len(description) > 5000:
         abort(403)
     if not description:
         description = ""
-    if len(image) > 100*1024:
-        flash("VIRHE: Liian suuri kuva")
-        return redirect("/edit_item/" + str(item_id))
 
     all_classes = items.get_all_classes()
     classes = []
@@ -188,7 +180,7 @@ def update_item():
                 abort(403)
             classes.append((title, value))
 
-    items.update_item(item_id, image, description, classes)
+    items.update_item(item_id, description, classes)
     return redirect("/item/" + str(item_id))
 
 @app.route("/remove_item/<int:item_id>", methods = ["GET","POST"])
