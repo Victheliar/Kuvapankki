@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Etsi julkaisu{% endblock %}
+{% block content %}
+    <h2>Etsi julkaisu</h2>
+    <form action="/find_item" method="get">
+        <p>
+        <label for="query">Hakusana</label>:<br />
+        <input type="text" name="query" id="query" value="{{ query }}">
+        </p>
+        <input type="submit" value="Etsi">
+    </form>
+    {% if query %}
+    <h3>Tulokset</h3>
+    <p>
+        <a href="/">Takaisin</a>
+    </p>
+    <hr />
+    {% for item in results %}
+    <div class="item">
+    Julkaisija: <a href="/user/{{ item.user_id }}">{{ item.username }}</a><br />
+    <img src="/image/{{ item.id }}" alt="Käyttäjän {{ item.username }} julkaisema kuva"/>
+    <p>
+
+    </p>
+    <p>{{ item.description | show_lines }}</p>
+    Kommentteja: {{ item.comment_count }}<br />
+    <a href="/item/{{ item.id }}">Katso julkaisu</a>
+    </div>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

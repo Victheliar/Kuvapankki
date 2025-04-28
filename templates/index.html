@@ -2,62 +2,33 @@
 
 {% block title %}Kuvapankki{% endblock %}
 {% block content %}
-{% if session.user_id %}
-    <h2>
-        Tervetuloa <a href="/user/{{ session.user_id }}">{{session.username }}</a>!
-    </h2>
-    <h2>Uusi julkaisu</h2>
-    <form action="/add_image" method="post" enctype="multipart/form-data">
-        <p>
-            <label for="image">Kuva (.png)</label>:<br />
-            <input type="file" name="image" id="image" accept=".png" required />
-        </p>
-        {% for class in classes %}
-        <p>
-            {{ class }}: <br />
-            {% for option in classes[class] %}
-            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" />
-            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
+    {% if session.user_id %}
+        <h2>
+            Tervetuloa <a href="/user/{{ session.user_id }}">{{session.username }}</a>!
+        </h2>
+        <h2>Uusi julkaisu</h2>
+        <form action="/add_image" method="post" enctype="multipart/form-data">
+            <p>
+                <label for="image">Kuva (.png)</label>:<br />
+                <input type="file" name="image" id="image" accept=".png" required />
+            </p>
+            {% for class in classes %}
+            <p>
+                {{ class }}: <br />
+                {% for option in classes[class] %}
+                <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" />
+                <label for="classes{{ class }}{{ option }}">{{ option }}</label>
+                {% endfor %}
+            </p>
             {% endfor %}
-        </p>
-        {% endfor %}
-        <p>
-            <label for="description">Kuvaus</label>:<br />
-            <textarea name="description" id="description" rows="8" cols="60" maxlength="5000"></textarea>
-        </p>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-        <input type="submit" value="Julkaise kuva" />
-    </form>
-{% endif %}
-<h2>Etsi julkaisu</h2>
-
-    <form action="/" method="get">
-        <p>
-        <label for="query">Hakusana</label>:<br />
-        <input type="text" name="query" id="query" value="{{ query }}">
-        </p>
-        <input type="submit" value="Etsi">
-    </form>
-    {% if query %}
-    <h3>Tulokset</h3>
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
-    <hr />
-    {% for item in results %}
-    <div class="item">
-    Julkaisija: <a href="/user/{{ item.user_id }}">{{ item.username }}</a><br />
-    <img src="/image/{{ item.id }}" alt="Käyttäjän {{ item.username }} julkaisema kuva"/>
-    <p>
-
-    </p>
-    <p>{{ item.description | show_lines }}</p>
-    Kommentteja: {{ item.comment_count }}<br />
-    <a href="/item/{{ item.id }}">Katso julkaisu</a>
-    </div>
-    {% endfor %}
-    {% else %}
-
+            <p>
+                <label for="description">Kuvaus</label>:<br />
+                <textarea name="description" id="description" rows="8" cols="60" maxlength="5000"></textarea>
+            </p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="submit" value="Julkaise kuva" />
+        </form>
+    {% endif %}
     <h3>Julkaisut</h3>
 
     <hr />
@@ -74,11 +45,9 @@
     <a href="/item/{{ item.id }}">Katso julkaisua</a>
     </div>
     {% endfor %}
-    {% endif %}
-
-<p>
-    <a href="/{{ page - 1 }}">&lt;&lt;</a>
-    Sivu {{ page }}/{{ page_count }}
-    <a href="/{{ page + 1}}">&gt;&gt;</a>
-</p>
+    <p>
+        <a href="/{{ page - 1 }}">&lt;&lt;</a>
+        Sivu {{ page }}/{{ page_count }}
+        <a href="/{{ page + 1}}">&gt;&gt;</a>
+    </p>
 {% endblock %}

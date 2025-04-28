@@ -35,15 +35,18 @@ def index(page=1):
     all_images = items.get_images(page, page_size)
     all_items = items.get_items(page, page_size)
     classes = items.get_all_classes()
+    return render_template("index.html", images = all_images, items = all_items,
+                           classes = classes, page=page, page_count=page_count)
+
+@app.route("/find_item")
+def find_item():
     query = request.args.get("query")
     if query:
         results = items.find_items(query)
     else:
         query = ""
         results = []
-    return render_template("index.html", images = all_images, items = all_items,
-                           classes = classes, query = query, results = results,
-                           page=page, page_count=page_count)
+    return render_template("find_item.html", query=query, results=results)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
