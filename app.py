@@ -242,6 +242,11 @@ def create():
         filled = {"username": username}
         return render_template("register.html", filled=filled)
 
+    if not password1 or not password2:
+        flash("VIRHE: Salasana ei voi olla tyhjä!")
+        filled = {"username": username}
+        return render_template("register.html", filled=filled)
+
     try:
         users.create_user(username, password1)
         flash("Tunnuksen luominen onnistui!")
