@@ -9,6 +9,8 @@
 * Käyttäjä pystyy lisäämään käyttäjäsivulleen profiilikuvan
 * Käyttäjä pystyy valitsemaan julkaisulleen luokittelun
 * Käyttäjä pystyy kommentoimaan muiden käyttäjien kuvia
+## Toiminta suurella tietomäärällä
+Sovelluksen toimintaa on testattu suurella tietomäärällä tiedoston seed.py avulla, eikä mitään eroa toiminnassa juuri havaittu.
 
 ## Sovelluksen asennus
 1. Asenna `flask` - kirjasto:
