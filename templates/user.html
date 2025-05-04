@@ -7,26 +7,26 @@
 
 </p>
 {% if user.has_pfp %}
-<img src="/pfp/{{ user.id }}" alt = "Käyttäjän {{ user.username }} profiilikuva" />
+<img src = "/pfp/{{ user.id }}" alt = "Käyttäjän {{ user.username }} profiilikuva" />
 {% endif %}
 <p>
 
 </p>
-{% if user.id == session.user_id%}
-<a href="/add_profile_picture">Lisää profiilikuva</a>
+{% if user.id == session.user_id %}
+<a href = "/add_profile_picture">Lisää profiilikuva</a>
 {% endif %}
 
 <p>
     Käyttäjä on julkaissut {{ posts | count }} kuvaa.
 </p>
 <hr />
-{%for post in posts%}
-<img src="/image/{{ post.id }}" alt="Käyttäjän {{ user.username }} julkaisema kuva"/>
+{% for post in posts %}
+<img src = "/image/{{ post.id }}" alt = "Käyttäjän {{ user.username }} julkaisema kuva"/>
 <p>
 
 </p>
 <p>{{ post.description | show_lines }}</p>
-<a href="/item/{{ post.id }}">Katso julkaisua</a>
+<a href = "/item/{{ post.id }}">Katso julkaisua</a>
 <hr />
-{%endfor%}
+{% endfor %}
 {% endblock %}

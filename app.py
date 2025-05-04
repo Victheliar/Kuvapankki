@@ -21,7 +21,7 @@ def show_lines(content):
 
 @app.route("/")
 @app.route("/<int:page>")
-def index(page=1):
+def index(page = 1):
     page_size = 10
     item_count = items.item_count()
     page_count = math.ceil(item_count / page_size)
@@ -36,7 +36,7 @@ def index(page=1):
     all_items = items.get_items(page, page_size)
     classes = items.get_all_classes()
     return render_template("index.html", images = all_images, items = all_items,
-                           classes = classes, page=page, page_count=page_count)
+                           classes = classes, page = page, page_count = page_count)
 
 @app.route("/find_item")
 def find_item():
@@ -46,7 +46,7 @@ def find_item():
     else:
         query = ""
         results = []
-    return render_template("find_item.html", query=query, results=results)
+    return render_template("find_item.html", query = query, results = results)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -56,7 +56,7 @@ def show_user(user_id):
     posts = users.get_posts(user_id)
     return render_template("user.html", user = user, posts = posts)
 
-@app.route("/add_profile_picture", methods=["GET", "POST"])
+@app.route("/add_profile_picture", methods = ["GET", "POST"])
 def add_profile_picture():
     require_login()
 
@@ -186,7 +186,7 @@ def update_item():
     items.update_item(item_id, description, classes)
     return redirect("/item/" + str(item_id))
 
-@app.route("/remove_item/<int:item_id>", methods = ["GET","POST"])
+@app.route("/remove_item/<int:item_id>", methods = ["GET", "POST"])
 def remove_item(item_id):
 
     require_login()
@@ -213,7 +213,7 @@ def show_image(item_id):
     if not image:
         abort(404)
     response = make_response(image)
-    response.headers.set("Content-Type","image/png")
+    response.headers.set("Content-Type", "image/png")
     return response
 
 @app.route("/item/<int:item_id>")
@@ -240,12 +240,12 @@ def create():
     if password1 != password2:
         flash("VIRHE: Salasanat eivät täsmää")
         filled = {"username": username}
-        return render_template("register.html", filled=filled)
+        return render_template("register.html", filled = filled)
 
     if not password1 or not password2:
         flash("VIRHE: Salasana ei voi olla tyhjä!")
         filled = {"username": username}
-        return render_template("register.html", filled=filled)
+        return render_template("register.html", filled = filled)
 
     try:
         users.create_user(username, password1)
@@ -255,12 +255,12 @@ def create():
     except sqlite3.IntegrityError:
         flash("VIRHE: Tunnus on jo varattu")
         filled = {"username": username}
-        return render_template("register.html", filled=filled)
+        return render_template("register.html", filled = filled)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html", next_page=request.referrer)
+        return render_template("login.html", next_page = request.referrer)
 
     if request.method == "POST":
         username = request.form["username"]
@@ -275,7 +275,7 @@ def login():
             return redirect(next_page)
         else:
             flash("VIRHE: Väärä tunnus tai salasana!")
-            return render_template("login.html", next_page=next_page)
+            return render_template("login.html", next_page = next_page)
 
 @app.route("/logout")
 def logout():

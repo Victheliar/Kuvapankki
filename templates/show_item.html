@@ -2,16 +2,16 @@
 
 {% block title %}Julkaisu käyttäjältä {{ item.username }}{% endblock %}
 {% block content %}
-<h2>Julkaisu käyttäjältä <a href="/user/{{ item.user_id }}">{{ item.username }}</a></h2>
+<h2>Julkaisu käyttäjältä <a href = "/user/{{ item.user_id }}">{{ item.username }}</a></h2>
 
-{% if session.user_id == item.user_id%}
+{% if session.user_id == item.user_id %}
 <p>
-    <a href="/edit_item/{{ item.id }}">Muokkaa</a>
-    <a href="/remove_item/{{ item.id }}">Poista</a>
+    <a href = "/edit_item/{{ item.id }}">Muokkaa</a>
+    <a href = "/remove_item/{{ item.id }}">Poista</a>
 </p>
 {% endif %}
 
-<img src="/image/{{ item.id }}" alt="Käyttäjän {{ item.username }} julkaisema kuva"/>
+<img src = "/image/{{ item.id }}" alt = "Käyttäjän {{ item.username }} julkaisema kuva"/>
 
 <p>
     Kuvaus:
@@ -22,7 +22,7 @@
     <li>Kategoria(t):</li>
     <ul>
     {% for class in classes %}
-        {% if class.title == "Kategoria"%}
+        {% if class.title == "Kategoria" %}
         <li>{{ class.value }}</li>
         {% endif %}
     {% endfor %}
@@ -32,30 +32,30 @@
     <li>Aihee(t):</li>
     <ul>
         {% for class in classes %}
-            {% if class.title == "Aihe"%}
+            {% if class.title == "Aihe" %}
             <li>{{ class.value }}</li>
             {% endif %}
         {% endfor %}
     </ul>
 </ul>
 {% endif %}
-{% if session.user_id%}
+{% if session.user_id %}
 <h3>Jätä kommentti</h3>
-<form action="/add_comment" method="post">
-    <label for="comment"> Kommentti</label>:<br />
-    <textarea name="comment" id="comment" rows="8" cols="60" maxlength="5000" required></textarea> <br />
-    <input type="hidden" name="item_id" value="{{ item.id }}" />
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Julkaise kommentti" />
+<form action = "/add_comment" method = "post">
+    <label for = "comment"> Kommentti</label>:<br />
+    <textarea name = "comment" id = "comment" rows = "8" cols = "60" maxlength = "5000" required></textarea> <br />
+    <input type = "hidden" name = "item_id" value = "{{ item.id }}" />
+    <input type = "hidden" name = "csrf_token" value = "{{ session.csrf_token }}" />
+    <input type = "submit" value = "Julkaise kommentti" />
 </form>
 {% else %}
-<p>Jos haluat jättää kommentin, <a href="/login">kirjaudu sisään</a>!</p>
+<p>Jos haluat jättää kommentin, <a href = "/login">kirjaudu sisään</a>!</p>
 {% endif %}
 <h3>Kommentit</h3>
 <hr />
 {% for comment in comments %}
 <p>
-    <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.content | show_lines }}
+    <a href = "/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.content | show_lines }}
 </p>
 <hr />
 {% endfor %}

@@ -3,28 +3,28 @@
 {% block title %}Julkaisun muokkaus{% endblock %}
 {% block content %}
 <h2>Julkaisun muokkaus</h2>
-<form action="/update_item" method="post" enctype="multipart/form-data">
+<form action = "/update_item" method = "post" enctype = "multipart/form-data">
     {% for class in all_classes %}
         <p>
             {{ class }}: <br />
             {% for option in all_classes[class] %}
             {% if option in classes[class] %}
-            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" checked />
-            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
+            <input type = "checkbox" name = "classes" id = "classes{{ class }}{{ option }}" value = "{{ class }}:{{ option }}" checked />
+            <label for = "classes{{ class }}{{ option }}">{{ option }}</label>
             {% else %}
-            <input type="checkbox" name="classes" id="classes{{ class }}{{ option }}" value="{{ class }}:{{ option }}" />
-            <label for="classes{{ class }}{{ option }}">{{ option }}</label>
+            <input type = "checkbox" name = "classes" id = "classes{{ class }}{{ option }}" value = "{{ class }}:{{ option }}" />
+            <label for = "classes{{ class }}{{ option }}">{{ option }}</label>
             {% endif %}
             {% endfor %}
         </p>
     {% endfor %}
     <p>
-        <label for="description">Kuvaus</label>:<br />
-        <textarea name="description" id="description" rows="8" cols="60" maxlength="5000">{{ item.description }}</textarea>
+        <label for = "description">Kuvaus</label>:<br />
+        <textarea name = "description" id = "description" rows = "8" cols = "60" maxlength = "5000">{{ item.description }}</textarea>
     </p>
-    <input type="hidden" name="item_id" value="{{ item.id }}"/>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Päivitä julkaisua" />
+    <input type = "hidden" name = "item_id" value = "{{ item.id }}"/>
+    <input type = "hidden" name = "csrf_token" value = "{{ session.csrf_token }}" />
+    <input type = "submit" value = "Päivitä julkaisua" />
 </form> <br />
-<a href="/item/{{ item.id }}">Takaisin julkasuun</a>
+<a href = "/item/{{ item.id }}">Takaisin julkasuun</a>
 {% endblock %}

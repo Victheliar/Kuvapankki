@@ -3,20 +3,20 @@
 {% block title %}Kirjaudu sisään{% endblock %}
 {% block content %}
 <h2>Kirjaudu sisään<h2>
-<form action="/login" method="post">
+<form action = "/login" method = "post">
     <p>
-        <label for="username">Tunnus</label>:<br />
-        <input type="text" name="username" id="username" />
+        <label for = "username">Tunnus</label>:<br />
+        <input type = "text" name = "username" id = "username" />
     </p>
     <p>
-        <label for="password">Salasana</label>:<br />
-        <input type="password" name="password" id="password" />
+        <label for = "password">Salasana</label>:<br />
+        <input type = "password" name = "password" id = "password" />
     </p>
-    <input type="submit" value="Kirjaudu" />
+    <input type = "submit" value = "Kirjaudu" />
     {% if next_page %}
-    <input type="hidden" name="next_page" value="{{ next_page }}" />
+    <input type = "hidden" name = "next_page" value = "{{ next_page }}" />
     {% else %}
-    <input type="hidden" name="next_page" value="/" />
+    <input type = "hidden" name = "next_page" value = "/" />
     {% endif %}
 </form>
 {% endblock %}

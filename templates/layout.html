@@ -10,17 +10,17 @@
     <h1>Kuvapankki</h1>
 
     <p>
-        <a href="/">Etusivu</a> |
-        <a href="/find_item">Etsi julkaisu</a> |
-        <a href="/register">Luo tunnus</a> |
+        <a href = "/">Etusivu</a> |
+        <a href = "/find_item">Etsi julkaisu</a> |
+        <a href = "/register">Luo tunnus</a> |
         {% if session.user_id %}
-        <a href="/logout">Kirjaudu ulos</a>
+        <a href = "/logout">Kirjaudu ulos</a>
         {% else %}
-        <a href="/login">Kirjaudu sisään</a>
+        <a href = "/login">Kirjaudu sisään</a>
         {% endif %}
     </p>
     {% for message in get_flashed_messages() %}
-    <div class="info">
+    <div class = "info">
         {{ message }}
     </div>
     {% endfor %}
