@@ -6,7 +6,7 @@ def item_count():
 
 def add_item(user_id, image, description, classes):
 
-    sql = """INSERT INTO Items(user_id, images, description) VALUES(?, ?, ?)"""
+    sql = "INSERT INTO Items(user_id, images, description) VALUES(?, ?, ?)"
     db.execute(sql, [user_id, image, description])
 
     item_id = db.last_insert_id()
